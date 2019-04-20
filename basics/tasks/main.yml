@@ -1,0 +1,27 @@
+---
+# Basic devbox tasks. Initial installs and so on.
+
+- name: update packages
+  apt:
+    update_cache: yes
+    upgrade: safe
+
+- name: install basic packages
+  apt:
+    state: latest
+    update_cache: yes
+    name: "{{ item }}"
+  loop:
+    - git
+    - vim
+    - emacs
+
+- name: install the fuck
+  pip:
+    name: thefuck
+    state: latest
+
+- name: configure the fuck
+  lineinfile:
+    path: /home/kenneth/.bashrc
+    line: 'eval $(thefuck --alias)'
