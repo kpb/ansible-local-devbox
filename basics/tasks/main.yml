@@ -16,7 +16,8 @@
     - vim
     - emacs
 
-- name: install the fuck
+# Best project ever! https://github.com/nvbn/thefuck    
+- name: install the fuck 
   pip:
     name: thefuck
     state: latest
