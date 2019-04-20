@@ -28,6 +28,7 @@ I/kenneth use [Xubuntu][xubuntu], so many of the commands use apt(itude). You co
   - gimp (ufraw + printing)
   - xmms
 - emacs keybindings
+- export editor env var
 
 <!-- refs-->
 [ansible]: https://ansible.com "Ansible Home Page"
