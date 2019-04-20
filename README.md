@@ -5,7 +5,7 @@
 [Ansible][ansible] playbook to provision my/kenneth's main laptop.
 
 I/kenneth use [Xubuntu][xubuntu], so many of the commands use apt(itude). You could easily adapt this for other
-[Debian][debian] releases or for it for rpm base distros.
+[Debian][debian] releases or fork/modify it for rpm based distros.
 
 ## Prerequisites
 
