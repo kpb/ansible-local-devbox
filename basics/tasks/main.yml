@@ -15,9 +15,11 @@
     - git
     - vim
     - emacs
+    - emacs-goodies-el
+    - bbdb
 
-# Best project ever! https://github.com/nvbn/thefuck    
-- name: install the fuck 
+# Best project ever! https://github.com/nvbn/thefuck
+- name: install the fuck
   pip:
     name: thefuck
     state: latest
@@ -26,3 +28,25 @@
   lineinfile:
     path: /home/kenneth/.bashrc
     line: 'eval $(thefuck --alias)'
+
+# Firefox tries to download markdown (*.md) files - I want to view them with the markdown viewer add-on
+# https://addons.mozilla.org/en-US/firefox/addon/markdown-viewer-webext/
+- name: install markdown mime-type
+  copy:
+    src: text-markdown.xml
+    dest: /home/kenneth/.local/share/mime/packages/
+    owner: kenneth
+    group: kenneth
+    mode: 0755
+
+- name: update mime db
+  command: update-mime-database /home/kenneth/.local/share/mime
+
+- name: export a righteous editor env var (emacsclient)
+  lineinfile:
+    path: /home/kenneth/.bashrc
+    line: 'export EDITOR=/usr/bin/emacsclient'
+
+- name: emacs keybindings...you will like them
+  command: xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
+  become_user: kenneth
