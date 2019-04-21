@@ -1,0 +1,6 @@
+---
+# xfce specific tasks
+
+- name: emacs keybindings...you will like them
+  command: xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
+  become_user: kenneth

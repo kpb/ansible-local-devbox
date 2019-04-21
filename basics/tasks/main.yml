@@ -46,7 +46,3 @@
   lineinfile:
     path: /home/kenneth/.bashrc
     line: 'export EDITOR=/usr/bin/emacsclient'
-
-- name: emacs keybindings...you will like them
-  command: xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
-  become_user: kenneth
