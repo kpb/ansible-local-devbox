@@ -1,0 +1,24 @@
+---
+# multimedia apps & config
+
+- name: install favorite multi media apps
+  apt:
+    state: latest
+    update_cache: yes
+    name: "{{ item }}"
+  loop:
+    - gimp
+    - gimp-help-en
+    - gimp-data-extras
+    - gimp-ufraw
+    - gimp-gutenprint
+    - vlc
+    - abcde
+    - audacious
+    - cmus
+    - cmus-plugin-ffmpeg
+
+- name: pip install youtube downloader
+  pip:
+    name: youtube_dl
+    state: latest
