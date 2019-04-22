@@ -20,3 +20,17 @@
     owner: kenneth
     group: kenneth
     mode: 0755
+
+# base16 color themes for the xfce terminal
+- name: clone the base16 repo into /tmp
+  git:
+    repo: https://github.com/afg984/base16-xfce4-terminal.git
+    dest: /tmp/base16
+
+- name: copy base16 themes
+  copy:
+    src: /tmp/base16/colorschemes/
+    dest: /home/kenneth/.local/share/xfce4/terminal/colorschemes/
+    owner: kenneth
+    group: kenneth
+    mode: 0755
