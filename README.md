@@ -49,7 +49,6 @@ I'm current using:
 - dotfiles
 - multimedia installs
   - vlc
-  - gimp (ufraw + printing)
   - xmms
 
 <!-- refs-->
