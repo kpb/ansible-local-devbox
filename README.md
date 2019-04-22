@@ -47,9 +47,6 @@ I'm current using:
 
 - document initial manual setup
 - dotfiles
-- multimedia installs
-  - vlc
-  - xmms
 
 <!-- refs-->
 [ansible]: https://ansible.com "Ansible Home Page"
