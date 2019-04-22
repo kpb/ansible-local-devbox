@@ -17,6 +17,7 @@
     - emacs
     - emacs-goodies-el
     - bbdb
+    - keepassx
 
 # Best project ever! https://github.com/nvbn/thefuck
 - name: install the fuck
