@@ -26,7 +26,7 @@ Install prerequisites. The `pip` release in the current [Xubuntu][xubuntu] relea
 
 ## Manual Set Up
 
-Manual task. Writing these down so I don't forget.
+Manual tasks. Writing these down so I don't forget.
 
 - SSH Keys. Need these for GitHub, deploying, etc.
 
@@ -47,6 +47,12 @@ I'm current using:
 
 - document initial manual setup
 - dotfiles
+- dev tools
+  - docker
+  - sdkman
+  - vs code
+  - vagrant
+  - virtual box
 
 <!-- refs-->
 [ansible]: https://ansible.com "Ansible Home Page"
