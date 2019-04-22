@@ -46,7 +46,6 @@ I'm current using:
 ## TODO/in-progress
 
 - document initial manual setup
-- xmodmap
 - dotfiles
 - multimedia installs
   - vlc

@@ -4,3 +4,19 @@
 - name: emacs keybindings...you will like them
   command: xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
   become_user: kenneth
+
+- name: copy xmodmaprc file
+  copy:
+    src: xmodmaprc
+    dest: /home/kenneth/.xmodmaprc
+    owner: kenneth
+    group: kenneth
+    mode: 0755
+
+- name: xfce autostart xmodmap destop file
+  copy:
+    src: xmodmap.desktop
+    dest: /home/kenneth/.config/autostart/
+    owner: kenneth
+    group: kenneth
+    mode: 0755
