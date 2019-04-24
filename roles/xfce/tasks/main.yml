@@ -34,3 +34,9 @@
     owner: kenneth
     group: kenneth
     mode: 0755
+
+- name: base16 terminal preview
+  pip:
+    name: base16-shell-preview
+    state: latest
+    umask: "0022"
