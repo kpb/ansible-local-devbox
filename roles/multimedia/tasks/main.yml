@@ -17,6 +17,7 @@
     - audacious
     - cmus
     - cmus-plugin-ffmpeg
+    - shotwell
 
 - name: pip install youtube downloader
   pip:
