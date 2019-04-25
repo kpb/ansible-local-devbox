@@ -1,0 +1,27 @@
+---
+# I/Kenneth keep my dotfiles at GitHub. Clone them and set up links here
+
+- name: clone dotfiles repo
+  git:
+    repo: 'git@github.com:kpb/dotfiles.git'
+    dest: /home/kenneth/dev/dotfiles
+    update: no
+  become: no
+
+- name: symlink bash aliases
+  file:
+    src: /home/kenneth/dev/dotfiles/bash/bash_aliases
+    dest: /home/kenneth/.bash_aliases
+    state: link
+    owner: kenneth
+    group: kenneth
+    mode: 0755
+
+- name: symlink emacs init files
+  file:
+    src: /home/kenneth/dev/dotfiles/emacs.d
+    dest: /home/kenneth/.emacs.d
+    state: link
+    owner: kenneth
+    group: kenneth
+    mode: 0755
