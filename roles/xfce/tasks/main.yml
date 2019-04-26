@@ -21,21 +21,26 @@
     group: kenneth
     mode: 0755
 
-# base16 color themes for the xfce terminal
-- name: clone the base16 repo into /tmp
+# base16 color schemes
+- name: clone the base16 repo
   git:
-    repo: https://github.com/afg984/base16-xfce4-terminal.git
-    dest: /tmp/base16
+    repo: git clone https://github.com/chriskempson/base16-shell.git 
+    dest: /home/kenneth/.config/base16-shell
+    update: no
+  become: no
+    
+- name: configure base16 in .bashrc
+  blockinfile:
+    path: /home/kenneth/.bashrc
+    block: |
+      BASE16_SHELL="$HOME/.config/base16-shell/"
+      [ -n "$PS1" ] && \
+        [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
 
-- name: copy base16 themes
-  copy:
-    src: /tmp/base16/colorschemes/
-    dest: /home/kenneth/.local/share/xfce4/terminal/colorschemes/
-    owner: kenneth
-    group: kenneth
-    mode: 0755
+  become: no
 
-- name: base16 terminal preview
+- name: install base16 terminal preview
   pip:
     name: base16-shell-preview
     state: latest
