@@ -43,16 +43,6 @@ I'm current using:
 - Pwdhash
 - uBlock Origin
 
-## TODO/in-progress
-
-- document initial manual setup
-- dev tools
-  - docker
-  - sdkman
-  - vs code
-  - vagrant
-  - virtual box
-
 <!-- refs-->
 [ansible]: https://ansible.com "Ansible Home Page"
 [xubuntu]: https://xubuntu.org "xubuntu home page"
