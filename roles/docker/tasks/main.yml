@@ -39,3 +39,26 @@
   register: hello_world
 
 - debug: var=hello_world.stdout_lines
+
+- name: create docker group
+  group:
+    name: docker
+    state: present
+
+- name: add user to docker group
+  user:
+    name: kenneth
+    groups: docker
+    append: yes # OMG can't believe this isn't the default!
+
+- name: start and enable docker systemd service
+  systemd:
+    name: docker
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
+
+- name: pip install docker-compose
+  pip:
+    name: docker-compose
+    state: latest
