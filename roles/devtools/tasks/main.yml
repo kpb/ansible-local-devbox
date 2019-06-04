@@ -8,7 +8,7 @@
     update_cache: yes
 
 #
-# VirtualBox tasks
+# VirtualBox
 #
 - name: add virtualbox apt key
   apt_key:
@@ -33,3 +33,12 @@
     name: kenneth
     groups: vboxusers
     append: yes # OMG can't believe this isn't the default!
+
+- name: install openjdk
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  loop:
+    - openjdk-11-jdk
+    - openjdk-11-doc
