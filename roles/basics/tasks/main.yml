@@ -27,7 +27,7 @@
 
 - name: configure the fuck
   lineinfile:
-    path: /home/kenneth/.bashrc
+    path: "/home/{{ user_name }}/.bashrc"
     line: 'eval $(thefuck --alias)'
 
 # Firefox tries to download markdown (*.md) files - I want to view them with the markdown viewer add-on
@@ -35,15 +35,15 @@
 - name: install markdown mime-type
   copy:
     src: text-markdown.xml
-    dest: /home/kenneth/.local/share/mime/packages/
-    owner: kenneth
-    group: kenneth
+    dest: "/home/{{ user_name }}/.local/share/mime/packages/"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
     mode: 0755
 
 - name: update mime db
-  command: update-mime-database /home/kenneth/.local/share/mime
+  command: "update-mime-database /home/{{ user_name }}/.local/share/mime"
 
 - name: export a righteous editor env var (emacsclient)
   lineinfile:
-    path: /home/kenneth/.bashrc
+    path: "/home/{{ user_name }}/.bashrc"
     line: 'export EDITOR=/usr/bin/emacsclient'
