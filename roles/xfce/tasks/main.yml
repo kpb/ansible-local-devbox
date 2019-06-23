@@ -13,8 +13,8 @@
     group: "{{ user_name }}"
     mode: 0755
 
-- name: xfce autostart xmodmap destop file
-  copy:
+- name: xfce autostart xmodmap desktop file
+  template:
     src: xmodmap.desktop
     dest: "/home/{{ user_name }}/.config/autostart/"
     owner: "{{ user_name }}"
