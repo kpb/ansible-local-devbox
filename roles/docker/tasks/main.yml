@@ -47,7 +47,7 @@
 
 - name: add user to docker group
   user:
-    name: kenneth
+    name: "{{ user_name }}"
     groups: docker
     append: yes # OMG can't believe this isn't the default!
 

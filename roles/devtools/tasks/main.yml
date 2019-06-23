@@ -28,9 +28,9 @@
 
 # TODO download and install extension pack
 
-- name: add kenneth to vboxusers
+- name: add user to vboxusers
   user:
-    name: kenneth
+    name: "{{ user_name }}"
     groups: vboxusers
     append: yes # OMG can't believe this isn't the default!
 
