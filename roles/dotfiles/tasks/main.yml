@@ -4,24 +4,24 @@
 - name: clone dotfiles repo
   git:
     repo: 'git@github.com:kpb/dotfiles.git'
-    dest: /home/kenneth/dev/dotfiles
+    dest: "/home/{{ user_name }}/dev/dotfiles"
     update: no
   become: no
 
 - name: symlink bash aliases
   file:
-    src: /home/kenneth/dev/dotfiles/bash/bash_aliases
-    dest: /home/kenneth/.bash_aliases
+    src: "/home/{{ user_name }}/dev/dotfiles/bash/bash_aliases"
+    dest: "/home/{{ user_name }}/.bash_aliases"
     state: link
-    owner: kenneth
-    group: kenneth
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
     mode: 0755
 
 - name: symlink emacs init files
   file:
-    src: /home/kenneth/dev/dotfiles/emacs.d
-    dest: /home/kenneth/.emacs.d
+    src: "/home/{{ user_name }}/dev/dotfiles/emacs.d"
+    dest: "/home/{{ user_name }}/.emacs.d"
     state: link
-    owner: kenneth
-    group: kenneth
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
     mode: 0755
