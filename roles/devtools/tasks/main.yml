@@ -42,3 +42,24 @@
   loop:
     - openjdk-11-jdk
     - openjdk-11-doc
+
+- name: download sdkman
+  get_url:
+    url: https://get.sdkman.io
+    dest: /tmp/sdkman_script
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+
+- name: install sdkman
+  environment:
+    SDKMAN_DIR: "/home/{{ user_name }}/.sdkman"
+  command: /bin/bash /tmp/sdkman_script
+  become: no
+
+- name: fix sdkman permissions
+  file:
+    path: "/home/{{ user_name }}/.sdkman"
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "0755"
+    recurse: true
