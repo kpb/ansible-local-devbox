@@ -63,3 +63,20 @@
     group: "{{ user_name }}"
     mode: "0755"
     recurse: true
+
+- name: add vscode key
+  apt_key:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    state: present
+
+- name: add vscode deb repo
+  apt_repository:
+    repo: deb https://packages.microsoft.com/repos/vscode stable main
+    state: present
+    update_cache: yes
+
+- name: install vscode
+  apt:
+    name: code
+    state: latest
+    update_cache: yes
