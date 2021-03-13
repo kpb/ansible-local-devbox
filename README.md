@@ -40,4 +40,4 @@ Manual tasks. Writing these down so I don't forget.
 [ansible-best-practices]: https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html "ansible best practices"
 [ansible]: https://ansible.com "Ansible Home Page"
 [debian]: https://www.debian.org "debian home page"
-    [xubuntu]: https://xubuntu.org "xubuntu home page"
+[xubuntu]: https://xubuntu.org "xubuntu home page"
