@@ -24,7 +24,7 @@
 # base16 color schemes
 - name: clone the base16 repo
   git:
-    repo: git clone https://github.com/chriskempson/base16-shell.git 
+    repo: 'https://github.com/chriskempson/base16-shell.git'
     dest: "/home/{{ user_name }}/.config/base16-shell"
     update: no
   become: no
