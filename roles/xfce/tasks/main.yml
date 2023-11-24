@@ -5,6 +5,9 @@
   command: xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
   become_user: "{{ user_name }}"
 
+# TODO: Replace xmodmap with XKB modification
+# /etc/default/keyboard
+# XKBOPTIONS="ctrl:swapcaps"
 - name: copy xmodmaprc file
   copy:
     src: xmodmaprc
