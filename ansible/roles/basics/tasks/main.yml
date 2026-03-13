@@ -1,10 +1,99 @@
 ---
 # Basic devbox tasks. Initial installs and so on.
+# Reviewed tasks are active again; only maintenance-safe tasks carry the upgrade tag.
 
 - name: update all packages
   ansible.builtin.apt:
     update_cache: yes
     upgrade: safe
+  tags:
+    - upgrade
+
+- name: ensure apt keyrings directory exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+  tags:
+    - upgrade
+
+- name: download Mozilla apt signing key
+  ansible.builtin.get_url:
+    url: "{{ firefox_mozilla_key_url }}"
+    dest: "{{ firefox_mozilla_keyring_path }}"
+    mode: "0644"
+  tags:
+    - upgrade
+
+- name: add Mozilla Firefox apt repository
+  ansible.builtin.apt_repository:
+    repo: "{{ firefox_mozilla_repo }}"
+    state: present
+    update_cache: yes
+  tags:
+    - upgrade
+
+- name: prefer Mozilla Firefox packages
+  ansible.builtin.template:
+    src: mozilla-firefox.pref.j2
+    dest: "{{ firefox_mozilla_preferences_path }}"
+    mode: "0644"
+  tags:
+    - upgrade
+
+- name: check whether Firefox snap is installed
+  ansible.builtin.command: snap list firefox
+  register: firefox_snap_list
+  changed_when: false
+  failed_when: false
+  tags:
+    - upgrade
+
+- name: remove Firefox snap
+  ansible.builtin.command: snap remove --purge firefox
+  when: firefox_snap_list.rc == 0
+  tags:
+    - upgrade
+
+- name: install Firefox from Mozilla apt repository
+  ansible.builtin.apt:
+    name: firefox
+    state: latest
+    update_cache: yes
+  tags:
+    - upgrade
+
+- name: check for Firefox snap profile
+  ansible.builtin.stat:
+    path: "{{ firefox_snap_profile_path }}"
+  register: firefox_snap_profile
+
+- name: check for migrated Firefox profile
+  ansible.builtin.stat:
+    path: "{{ firefox_profile_path }}"
+  register: firefox_profile
+
+- name: ensure Firefox profile parent directory exists
+  ansible.builtin.file:
+    path: "{{ firefox_profile_path | dirname }}"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: "0755"
+  when:
+    - firefox_snap_profile.stat.exists
+    - not firefox_profile.stat.exists
+
+- name: migrate Firefox profile from snap location
+  ansible.builtin.command:
+    argv:
+      - cp
+      - -a
+      - "{{ firefox_snap_profile_path }}"
+      - "{{ firefox_profile_path }}"
+  when:
+    - firefox_snap_profile.stat.exists
+    - not firefox_profile.stat.exists
 
 - name: install basic packages
   ansible.builtin.apt:
@@ -18,12 +107,16 @@
     - emacs-goodies-el
     - bbdb
     - keepassx
+  tags:
+    - upgrade
 
 # Best project ever! https://github.com/nvbn/thefuck
 - name: install the fuck
   ansible.builtin.pip:
     name: thefuck
     state: latest
+  tags:
+    - upgrade
 
 - name: configure the fuck
   ansible.builtin.lineinfile:

@@ -1,0 +1,9 @@
+---
+firefox_mozilla_key_url: https://packages.mozilla.org/apt/repo-signing-key.gpg
+firefox_mozilla_keyring_path: /etc/apt/keyrings/packages.mozilla.org.asc
+firefox_mozilla_repo: >-
+  deb [signed-by={{ firefox_mozilla_keyring_path }}]
+  https://packages.mozilla.org/apt mozilla main
+firefox_mozilla_preferences_path: /etc/apt/preferences.d/mozilla-firefox
+firefox_snap_profile_path: "/home/{{ user_name }}/snap/firefox/common/.mozilla/firefox"
+firefox_profile_path: "/home/{{ user_name }}/.mozilla/firefox"
