@@ -15,6 +15,8 @@ easily adapt this for other [Debian][debian] releases or fork/modify it for rpm 
 This project starts with a very small bootstrap script whose only job is to install the
 minimum tooling required to run the real workstation setup.
 
+The actual workstation automation now lives under `ansible/`.
+
 It currently installs:
 
 - git
@@ -36,13 +38,13 @@ sudo apt update && sudo apt install -y curl
 Fast, optimistic, and a little irresponsible:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kpb/ansible-local-devbox/master/bootstrap/bootstrap.sh | bash
+curl -fsSL https://raw.githubusercontent.com/kpb/ansible-local-devbox/main/bootstrap/bootstrap.sh | bash
 ```
 
 Cowardly, but wise:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kpb/ansible-local-devbox/master/bootstrap/bootstrap.sh -o bootstrap.sh
+curl -fsSL https://raw.githubusercontent.com/kpb/ansible-local-devbox/main/bootstrap/bootstrap.sh -o bootstrap.sh
 less bootstrap.sh
 bash bootstrap.sh
 ```
@@ -57,7 +59,7 @@ bash bootstrap.sh
 
 ## Running
 
-    $ ansible-playbook -K devbox.yml
+    $ ansible-playbook -K ansible/devbox.yml
 
 ## Manual Set Up
 
