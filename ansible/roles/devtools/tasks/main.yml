@@ -10,14 +10,21 @@
 #
 # VirtualBox
 #
-- name: add virtualbox apt key
-  ansible.builtin.apt_key:
+- name: ensure apt keyrings directory exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: download virtualbox apt key
+  ansible.builtin.get_url:
     url: https://www.virtualbox.org/download/oracle_vbox_2016.asc
-    state: present
+    dest: /etc/apt/keyrings/virtualbox.asc
+    mode: "0644"
 
 - name: add virtualbox debian repo
   ansible.builtin.apt_repository:
-    repo: deb https://download.virtualbox.org/virtualbox/debian {{ ansible_lsb.codename }} contrib
+    repo: deb [signed-by=/etc/apt/keyrings/virtualbox.asc] https://download.virtualbox.org/virtualbox/debian {{ ansible_lsb.codename }} contrib
     state: present
 
 - name: install virtualbox
@@ -55,14 +62,15 @@
     mode: "0755"
     recurse: true
 
-- name: add vscode key
-  ansible.builtin.apt_key:
+- name: download vscode apt key
+  ansible.builtin.get_url:
     url: https://packages.microsoft.com/keys/microsoft.asc
-    state: present
+    dest: /etc/apt/keyrings/vscode.asc
+    mode: "0644"
 
 - name: add vscode deb repo
   ansible.builtin.apt_repository:
-    repo: deb https://packages.microsoft.com/repos/vscode stable main
+    repo: deb [signed-by=/etc/apt/keyrings/vscode.asc] https://packages.microsoft.com/repos/vscode stable main
     state: present
     update_cache: yes
 
