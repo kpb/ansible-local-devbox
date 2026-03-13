@@ -1,0 +1,65 @@
+---
+# AI tooling, starting with the OpenAI Codex CLI.
+
+- name: ensure apt keyrings directory exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: "0755"
+
+- name: install NodeSource repository prerequisites
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - curl
+      - gnupg
+    state: latest
+    update_cache: yes
+
+- name: download NodeSource apt signing key
+  ansible.builtin.get_url:
+    url: "{{ ai_tools_nodesource_key_url }}"
+    dest: "{{ ai_tools_nodesource_keyring_path }}"
+    mode: "0644"
+
+- name: add NodeSource apt repository
+  ansible.builtin.apt_repository:
+    repo: "{{ ai_tools_nodesource_repo }}"
+    state: present
+    update_cache: yes
+
+- name: install Node.js
+  ansible.builtin.apt:
+    name: nodejs
+    state: latest
+    update_cache: yes
+
+- name: check whether Codex CLI is installed globally
+  ansible.builtin.command:
+    argv:
+      - npm
+      - list
+      - -g
+      - --depth=0
+      - "{{ ai_tools_codex_package }}"
+  register: ai_tools_codex_npm_list
+  changed_when: false
+  failed_when: false
+
+- name: install Codex CLI globally
+  ansible.builtin.command:
+    argv:
+      - npm
+      - install
+      - -g
+      - "{{ ai_tools_codex_package }}"
+  when: ai_tools_codex_npm_list.rc != 0
+
+- name: update Codex CLI globally
+  ansible.builtin.command:
+    argv:
+      - npm
+      - update
+      - -g
+      - "{{ ai_tools_codex_package }}"
+  when: ai_tools_codex_npm_list.rc == 0

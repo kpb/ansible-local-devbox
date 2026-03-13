@@ -15,6 +15,9 @@
     - role: devtools
       tags:
         - devtools
+    - role: ai-tools
+      tags:
+        - ai-tools
     - role: docker
       tags:
         - docker
