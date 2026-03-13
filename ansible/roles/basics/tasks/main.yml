@@ -103,6 +103,8 @@
     name: "{{ item }}"
   loop:
     - git
+    - make
+    - stow
     - vim
     - emacs
     - emacs-goodies-el

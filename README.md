@@ -72,6 +72,10 @@ ansible-playbook -K ansible/devbox.yml --tags basics
 ansible-playbook -K ansible/devbox.yml --tags docker
 ```
 
+Many roles assume `basics` has already run, because it installs shared system
+packages and foundational setup. If you are running individual role tags on a
+fresh machine, run `--tags basics,<role>` or run the full playbook first.
+
 If you just want the maintenance pass:
 
 ```bash

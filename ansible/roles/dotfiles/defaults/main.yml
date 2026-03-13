@@ -1,0 +1,4 @@
+---
+dotfiles_repo_url: git@github.com:kpb/dotfiles.git
+dotfiles_dev_root: "/home/{{ user_name }}/dev"
+dotfiles_repo_dest: "{{ dotfiles_dev_root }}/dotfiles"

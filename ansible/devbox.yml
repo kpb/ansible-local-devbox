@@ -6,6 +6,10 @@
     - role: basics
       tags:
         - basics
+    - role: dotfiles
+      tags:
+        - dotfiles
+        - upgrade
     - role: xfce
       tags:
         - xfce
