@@ -111,10 +111,44 @@
     - upgrade
 
 # Best project ever! https://github.com/nvbn/thefuck
-- name: install the fuck
-  ansible.builtin.pip:
-    name: thefuck
-    state: latest
+- name: check whether the fuck is installed via pipx
+  ansible.builtin.command:
+    argv:
+      - pipx
+      - list
+      - --short
+  become_user: "{{ user_name }}"
+  environment:
+    PATH: "/home/{{ user_name }}/.local/bin:{{ ansible_env.PATH }}"
+  register: thefuck_pipx_list
+  changed_when: false
+  failed_when: false
+  tags:
+    - upgrade
+
+- name: install the fuck via pipx
+  ansible.builtin.command:
+    argv:
+      - pipx
+      - install
+      - thefuck
+  become_user: "{{ user_name }}"
+  environment:
+    PATH: "/home/{{ user_name }}/.local/bin:{{ ansible_env.PATH }}"
+  when: "'thefuck' not in thefuck_pipx_list.stdout_lines"
+  tags:
+    - upgrade
+
+- name: upgrade the fuck via pipx
+  ansible.builtin.command:
+    argv:
+      - pipx
+      - upgrade
+      - thefuck
+  become_user: "{{ user_name }}"
+  environment:
+    PATH: "/home/{{ user_name }}/.local/bin:{{ ansible_env.PATH }}"
+  when: "'thefuck' in thefuck_pipx_list.stdout_lines"
   tags:
     - upgrade
 
