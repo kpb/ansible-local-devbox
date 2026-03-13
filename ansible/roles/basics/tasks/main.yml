@@ -49,20 +49,6 @@
   tags:
     - upgrade
 
-- name: remove Firefox snap
-  ansible.builtin.command: snap remove --purge firefox
-  when: firefox_snap_list.rc == 0
-  tags:
-    - upgrade
-
-- name: install Firefox from Mozilla apt repository
-  ansible.builtin.apt:
-    name: firefox
-    state: latest
-    update_cache: yes
-  tags:
-    - upgrade
-
 - name: check for Firefox snap profile
   ansible.builtin.stat:
     path: "{{ firefox_snap_profile_path }}"
@@ -94,6 +80,20 @@
   when:
     - firefox_snap_profile.stat.exists
     - not firefox_profile.stat.exists
+
+- name: remove Firefox snap
+  ansible.builtin.command: snap remove --purge firefox
+  when: firefox_snap_list.rc == 0
+  tags:
+    - upgrade
+
+- name: install Firefox from Mozilla apt repository
+  ansible.builtin.apt:
+    name: firefox
+    state: latest
+    update_cache: yes
+  tags:
+    - upgrade
 
 - name: install basic packages
   ansible.builtin.apt:
