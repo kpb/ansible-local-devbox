@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+SUDO=""
+
 log() {
   printf '\n==> %s\n' "$*"
 }
@@ -43,7 +45,7 @@ apt_install_if_missing() {
 
   if (( ${#missing[@]} > 0 )); then
     log "Installing packages: ${missing[*]}"
-    sudo apt-get install -y "${missing[@]}"
+    "${SUDO[@]}" apt-get install -y "${missing[@]}"
   else
     log "Required apt packages already installed"
   fi
@@ -78,15 +80,17 @@ main() {
   require_command dpkg
 
   if need_sudo; then
+    SUDO=(sudo)
     require_command sudo
     log "Checking sudo access"
-    sudo -v
+    "${SUDO[@]}" -v
   else
+    SUDO=()
     warn "Running as root; installing ansible-core with pipx for root is usually not what you want"
   fi
 
   log "Updating apt package index"
-  sudo apt-get update
+  "${SUDO[@]}" apt-get update
 
   apt_install_if_missing \
     git \
