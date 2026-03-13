@@ -2,7 +2,7 @@
 # multimedia apps & config
 
 - name: install favorite multi media apps
-  apt:
+  ansible.builtin.apt:
     state: latest
     update_cache: yes
     name: "{{ item }}"
@@ -20,6 +20,6 @@
     - shotwell
 
 - name: pip install youtube downloader
-  pip:
+  ansible.builtin.pip:
     name: youtube_dl
     state: latest

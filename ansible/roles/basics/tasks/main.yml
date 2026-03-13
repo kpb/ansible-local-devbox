@@ -2,12 +2,12 @@
 # Basic devbox tasks. Initial installs and so on.
 
 - name: update all packages
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     upgrade: safe
 
 - name: install basic packages
-  apt:
+  ansible.builtin.apt:
     state: latest
     update_cache: yes
     name: "{{ item }}"
@@ -21,19 +21,19 @@
 
 # Best project ever! https://github.com/nvbn/thefuck
 - name: install the fuck
-  pip:
+  ansible.builtin.pip:
     name: thefuck
     state: latest
 
 - name: configure the fuck
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "/home/{{ user_name }}/.bashrc"
     line: 'eval $(thefuck --alias)'
 
 # Firefox tries to download markdown (*.md) files - I want to view them with the markdown viewer add-on
 # https://addons.mozilla.org/en-US/firefox/addon/markdown-viewer-webext/
 - name: install markdown mime-type
-  copy:
+  ansible.builtin.copy:
     src: text-markdown.xml
     dest: "/home/{{ user_name }}/.local/share/mime/packages/"
     owner: "{{ user_name }}"
@@ -41,9 +41,9 @@
     mode: 0755
 
 - name: update mime db
-  command: "update-mime-database /home/{{ user_name }}/.local/share/mime"
+  ansible.builtin.command: "update-mime-database /home/{{ user_name }}/.local/share/mime"
 
 - name: export a righteous editor env var (emacsclient)
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: "/home/{{ user_name }}/.bashrc"
     line: 'export EDITOR=/usr/bin/emacsclient'

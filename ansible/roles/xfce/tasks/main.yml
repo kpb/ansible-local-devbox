@@ -2,14 +2,14 @@
 # xfce specific tasks
 
 - name: emacs keybindings...you will like them
-  command: xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
+  ansible.builtin.command: xfconf-query -c xsettings -p /Gtk/KeyThemeName -s Emacs
   become_user: "{{ user_name }}"
 
 # TODO: Replace xmodmap with XKB modification
 # /etc/default/keyboard
 # XKBOPTIONS="ctrl:swapcaps"
 - name: copy xmodmaprc file
-  copy:
+  ansible.builtin.copy:
     src: xmodmaprc
     dest: "/home/{{ user_name }}/.xmodmaprc"
     owner: "{{ user_name }}"
@@ -17,7 +17,7 @@
     mode: 0755
 
 - name: xfce autostart xmodmap desktop file
-  template:
+  ansible.builtin.template:
     src: xmodmap.desktop
     dest: "/home/{{ user_name }}/.config/autostart/"
     owner: "{{ user_name }}"
@@ -26,14 +26,14 @@
 
 # base16 color schemes
 - name: clone the base16 repo
-  git:
+  ansible.builtin.git:
     repo: 'https://github.com/chriskempson/base16-shell.git'
     dest: "/home/{{ user_name }}/.config/base16-shell"
     update: no
   become: no
     
 - name: configure base16 in .bashrc
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: "/home/{{ user_name }}/.bashrc"
     block: |
       BASE16_SHELL="$HOME/.config/base16-shell/"
@@ -44,7 +44,7 @@
   become: no
 
 - name: install base16 terminal preview
-  pip:
+  ansible.builtin.pip:
     name: base16-shell-preview
     state: latest
     umask: "0022"
