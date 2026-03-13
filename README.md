@@ -7,16 +7,53 @@ practices][ansible-best-practices].
 
 If you run these plays on your machine __YOUR BOX WILL BE RECONFIGURED AND YOU MIGHT NOT LIKE IT!__
 
-I/kenneth am currently using [Xubuntu][xubuntu] 20.04, so many of the [Ansible][ansible] tasks use apt(itude). You could easily adapt this for other
-[Debian][debian] releases or fork/modify it for rpm based distros.
+I/kenneth am currently running [Xubuntu][xubuntu] 24.04, so many of the [Ansible][ansible] tasks use apt(itude). You could
+easily adapt this for other [Debian][debian] releases or fork/modify it for rpm based distros.
 
-## Prerequisites
+## Bootstrap
 
-Install prerequisites. [(X)Ubuntu][xubuntu] ships with python3 pre-installed, so use the package manager to install pip.
+This project starts with a very small bootstrap script whose only job is to install the
+minimum tooling required to run the real workstation setup.
 
-    $ sudo apt-get install -y aptitude
-    $ sudo aptitude install -y software-properties-common 
-    $ sudo aptitude install -y python3-pip
+It currently installs:
+
+- git
+- python3
+- python3-pip
+- pipx
+- ansible-core (via pipx)
+
+## Prerequisite: install curl
+
+Fresh (X)ubuntu installs may not include `curl` by default. That’s annoying, but not a crisis.  Install it first:
+
+```bash
+sudo apt update && sudo apt install -y curl
+```
+
+### Run bootstrap
+
+Fast, optimistic, and a little irresponsible:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/kpb/ansible-local-devbox/master/bootstrap/bootstrap.sh | bash
+```
+
+Cowardly, but wise:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/kpb/ansible-local-devbox/master/bootstrap/bootstrap.sh -o bootstrap.sh
+less bootstrap.sh
+bash bootstrap.sh
+```
+
+## Notes
+
+- Ubuntu/Xubuntu only for now
+- uses `apt` for base packages
+- uses `pipx` to install `ansible-core`
+- safe to rerun
+- small on purpose, because bootstrap scripts should know their place
 
 ## Running
 
