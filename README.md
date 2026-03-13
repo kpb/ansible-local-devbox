@@ -59,7 +59,24 @@ bash bootstrap.sh
 
 ## Running
 
-    $ ansible-playbook -K ansible/devbox.yml
+When you’re ready to let the machine make some choices for you:
+
+```bash
+ansible-playbook -K ansible/devbox.yml
+```
+
+If you only want one corner of the circus, run a single role by tag:
+
+```bash
+ansible-playbook -K ansible/devbox.yml --tags basics
+ansible-playbook -K ansible/devbox.yml --tags docker
+```
+
+If you just want the maintenance pass:
+
+```bash
+ansible-playbook -K ansible/devbox.yml --tags upgrade
+```
 
 ## Manual Set Up
 

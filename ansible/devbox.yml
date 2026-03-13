@@ -3,8 +3,18 @@
   connection: local
   become: yes
   roles:
-    - basics
-    - xfce
-    - multimedia
-    - devtools
-    - docker
+    - role: basics
+      tags:
+        - basics
+    - role: xfce
+      tags:
+        - xfce
+    - role: multimedia
+      tags:
+        - multimedia
+    - role: devtools
+      tags:
+        - devtools
+    - role: docker
+      tags:
+        - docker
