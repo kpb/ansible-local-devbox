@@ -7,7 +7,7 @@ docker_architecture_map:
   armv7l: armhf
   ppc64le: ppc64el
 docker_apt_architecture: >-
-  {{ docker_architecture_map.get(ansible_architecture, ansible_architecture) }}
+  {{ docker_architecture_map.get(ansible_facts["architecture"], ansible_facts["architecture"]) }}
 docker_conflicting_packages:
   - docker.io
   - docker-compose
