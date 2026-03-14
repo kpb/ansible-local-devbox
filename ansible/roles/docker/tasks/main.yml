@@ -1,70 +1,75 @@
 ---
-# install docker
+# install docker using Docker's official Ubuntu apt repository
+
+- name: remove conflicting Docker packages
+  ansible.builtin.apt:
+    name: "{{ docker_conflicting_packages }}"
+    state: absent
+    purge: yes
+  tags:
+    - upgrade
 
 - name: install docker prerequisites
   ansible.builtin.apt:
-    name: "{{ item }}"
-    state: latest
+    name: "{{ docker_prerequisite_packages }}"
+    state: present
     update_cache: yes
-  loop:
-    - apt-transport-https
-    - ca-certificates
-    - curl
-    - gnupg-agent
-    - software-properties-common
+  tags:
+    - upgrade
 
 - name: ensure apt keyrings directory exists
   ansible.builtin.file:
     path: /etc/apt/keyrings
     state: directory
     mode: "0755"
+  tags:
+    - upgrade
 
 - name: install docker repo key
   ansible.builtin.get_url:
-    url: https://download.docker.com/linux/ubuntu/gpg
-    dest: /etc/apt/keyrings/docker.asc
+    url: "{{ docker_apt_repo_url }}/gpg"
+    dest: "{{ docker_apt_keyring_path }}"
     mode: "0644"
+  tags:
+    - upgrade
 
 - name: add docker repo
   ansible.builtin.apt_repository:
-    repo: deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu {{ ansible_lsb.codename }} stable
+    repo: >-
+      deb [arch={{ docker_apt_architecture }} signed-by={{ docker_apt_keyring_path }}]
+      {{ docker_apt_repo_url }} {{ ansible_lsb.codename }} stable
     state: present
+    update_cache: yes
+  tags:
+    - upgrade
 
-- name: install docker
+- name: install docker packages
   ansible.builtin.apt:
-    name: "{{ item }}"
+    name: "{{ docker_packages }}"
     state: latest
     update_cache: yes
-  loop:
-    - docker-ce
-    - docker-ce-cli
-    - containerd.io
-
-- name: run docker hello world for great profit
-  ansible.builtin.command: docker run hello-world
-  register: hello_world
-
-- ansible.builtin.debug: var=hello_world.stdout_lines
+  tags:
+    - upgrade
 
 - name: create docker group
   ansible.builtin.group:
     name: docker
     state: present
+  tags:
+    - upgrade
 
 - name: add user to docker group
   ansible.builtin.user:
     name: "{{ user_name }}"
     groups: docker
     append: yes # OMG can't believe this isn't the default!
+  tags:
+    - upgrade
 
 - name: start and enable docker systemd service
   ansible.builtin.systemd:
     name: docker
     enabled: yes
-    daemon_reload: yes
-    state: restarted
-
-- name: pip install docker-compose
-  ansible.builtin.pip:
-    name: docker-compose
-    state: latest
+    state: started
+  tags:
+    - upgrade
